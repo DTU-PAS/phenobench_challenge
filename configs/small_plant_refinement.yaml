@@ -1,0 +1,52 @@
+project_name: "maskformer_at_phenobench"
+experiment_name: "small_plant_refinement"
+seed: 101
+overfit: False
+inference:
+  threshold: 0.5
+  mask_threshold: 0.5
+  overlap_mask_area_threshold: 0.8
+model:
+  pretrained: facebook/mask2former-swin-base-IN21k-ade-semantic
+  ckpt_path: None
+  mode: semantic
+  ema_decay: 1.0
+data:
+  root: <path-to-PhenoBench> # Path to the root folder of the dataset
+  target_type: plant_instances
+  img_size: 256
+  num_workers: 4
+  ds_mean: [123.675, 116.280, 103.530]
+  ds_std: [58.395, 57.120, 57.375]
+  p_randomresizedcrop: 1.0
+  p_horizontalflip: 0.5
+  p_verticalflip: 0.5
+  p_rgbshift: 1.0
+  p_randombrightnesscontrast: 1.0
+  p_blur: 0.0
+  p_rotate: 0.5
+  blackout: False
+training:
+  max_steps: 10000
+  log_every_n_steps: 20
+  check_val_every_n_epoch: 2
+  do_val_loss: True
+  do_val_metrics: True
+  batch_size: 16
+  accumulate_grad_batches: 1
+  gradient_clip_val: 0.01
+optimizer:
+  name: AdamW
+  lr: 0.0005
+  encoder_lr_factor: 0.1
+  weight_decay: 0.05
+scheduler:
+  name: PolynomialLR
+  T_0: 10
+  T_mult: 1
+  milestones: [3500, 5000]
+  gamma: 0.1
+  warmup_steps: 0 #1206 # 2 epochs
+  warmup_start_multiplier: 0.1
+logging:
+  output_folder: <output_folder>  # Path to the log folder

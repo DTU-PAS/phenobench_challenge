@@ -23,8 +23,8 @@ def main(inference_cfg: DictConfig):
     inference_plant_refinement_main(inference_cfg, model_conf)
 
     # inference_leaf_instance_crop
-    model_conf = OmegaConf.load(to_absolute_path(inference_cfg.leaf_instance_crop_segmentation.config))
-    model_conf.model.ckpt_path = to_absolute_path(inference_cfg.leaf_instance_crop_segmentation.ckpt)
+    model_conf = OmegaConf.load(to_absolute_path(inference_cfg.leaf_instance_crop_segmentation_model.config))
+    model_conf.model.ckpt_path = to_absolute_path(inference_cfg.leaf_instance_crop_segmentation_model.ckpt)
     inference_leaf_instance_crop_main(inference_cfg, model_conf)
 
 

@@ -1,0 +1,17 @@
+dataset_root: <path-to-PhenoBench>
+split: val
+output_folder: <output_folder>
+
+panoptic_plant_segmentation_model:
+  ckpt: <path-to-panoptic_plant_segmentation_model-ckpt>
+  config: configs/panoptic_plant_segmentation.yaml
+
+small_plant_refinement_model:
+  ckpt: <path-to-small_plant_refinement_model-ckpt
+  config: configs/small_plant_refinement.yaml
+
+leaf_instance_crop_segmentation_model:
+  ckpt: <path-to-leaf_instance_crop_segmentation_model-ckpt>
+  config: configs/leaf_instance_crop_segmentation.yaml
+
+

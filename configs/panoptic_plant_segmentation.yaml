@@ -1,0 +1,51 @@
+project_name: "maskformer_at_phenobench"
+experiment_name: "panoptic_plant_segmentation"
+seed: 101
+overfit: False
+inference:
+  threshold: 0.5
+  mask_threshold: 0.5
+  overlap_mask_area_threshold: 0.8
+model:
+  pretrained: facebook/mask2former-swin-large-coco-panoptic
+  ckpt_path: None
+  mode: panoptic
+  ema_decay: 0.9998
+data:
+  root: <path-to-PhenoBench>  # Path to the root folder of the dataset
+  target_type: plant_instances
+  img_size: 1024
+  num_workers: 4
+  ds_mean: [124.574, 97.684, 65.202]
+  ds_std: [51.273, 45.172, 34.660]
+  p_randomresizedcrop: 1.0
+  p_horizontalflip: 0.5
+  p_verticalflip: 0.5
+  p_rgbshift: 1.0
+  p_randombrightnesscontrast: 1.0
+  p_blur: 0.4
+  p_rotate: 0.5
+  blackout: False
+training:
+  max_steps: 18000
+  log_every_n_steps: 20
+  check_val_every_n_epoch: 5
+  do_val_loss: True
+  do_val_metrics: True
+  batch_size: 1
+  accumulate_grad_batches: 16
+  gradient_clip_val: 0.01
+optimizer:
+  name: AdamW
+  lr: 0.0001
+  encoder_lr_factor: 0.1
+  weight_decay: 0.05
+scheduler:
+  name: PolynomialLR
+  milestones: [3500, 5000]
+  gamma: 0.1
+  warmup_steps: 440
+  warmup_start_multiplier: 0.1
+logging:
+  output_folder: <output_folder>  # Path to the log folder
+
